@@ -16,12 +16,13 @@ document.getElementById("send-btn").addEventListener("click", () => {
     const userInput = setupTextarea.value
     setupInputContainer.innerHTML = `<img src="images/loading.svg" class="loading" id="loading">`
     movieBossText.innerText = `Ok, just wait a second while my digital brain digests that...`
-    fetchBotReply()
-    // fetchSynopsis(userInput)
+    fetchBotReply(userInput)
+    fetchSynopsis(userInput)
   }
 
 })
 
+// this function generate bot reply after user input the idea
 async function fetchBotReply(outline) {
   const response = await openai.createCompletion({
     model: 'text-davinci-003',
@@ -44,7 +45,7 @@ async function fetchBotReply(outline) {
   movieBossText.innerText = response.data.choices[0].text.trim()
 }
 
-async function fetchSynopsis(userInput) {
+async function fetchSynopsis(outline) {
   const response = await openai.createCompletion({
     model: 'text-davinci-003',
     prompt: `Generate an engaging, professional and marketable movie synopsis based on an outline. The synopsis should include actors names in brackets after each character. Choose actors that would be ideal for this role. 
